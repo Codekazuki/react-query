@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 const Form = () => {
-  const [newItemName, setNewItemName] = useState('');
+  const [newItemName, setNewItemName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,6 +11,7 @@ const Form = () => {
       <h4>task bud</h4>
       <div className='form-control'>
         <input
+          placeholder='put task here'
           type='text '
           className='form-input'
           value={newItemName}
