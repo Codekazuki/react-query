@@ -6,17 +6,13 @@ import { toast } from "react-toastify";
 const Form = () => {
   const [newItemName, setNewItemName] = useState("");
   const queryClient = useQueryClient();
-  const {
-    mutate: createTask,
-    isLoading,
-    tasks,
-  } = useMutation({
+  const { mutate: createTask, isLoading } = useMutation({
     mutationFn: (taskTitle) => customFetch.post("/", { title: taskTitle }),
     onError: (error) => {
       toast.error(error.response.data.msg);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [tasks] });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
       toast.success("task added");
       setNewItemName("");
     },
