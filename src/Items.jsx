@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import SingleItem from "./SingleItem";
 import customFetch from "./util";
 const Items = ({ items }) => {
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, error, isError, response } = useQuery({
     queryKey: ["tasks"],
     queryFn: () => customFetch.get("/"),
   });
@@ -11,6 +11,17 @@ const Items = ({ items }) => {
     return (
       <p style={{ marginTop: "0.5rem", color: "red", fontSize: "2rem" }}>
         Loading
+      </p>
+    );
+  }
+  if (isError) {
+    return (
+      <p style={{ marginTop: "0.5rem", color: "red", fontSize: "2rem" }}>
+        {" "}
+        <span>
+          There was an error <br />
+        </span>
+        {error.message}
       </p>
     );
   }
