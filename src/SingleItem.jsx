@@ -3,9 +3,6 @@ import customFetch from "./util";
 import { toast } from "react-toastify";
 
 const SingleItem = ({ item }) => {
-  // const handleDelete = () => {
-  //   newData = data.filter((filtered) => filtered.id !== id);
-  // };
   const queryClient = useQueryClient();
   const { mutate: editTask } = useMutation({
     mutationFn: ({ taskId, isDone }) => {
@@ -16,7 +13,7 @@ const SingleItem = ({ item }) => {
       toast.success("task status changed");
     },
   });
-  const { mutate: deleteTask } = useMutation({
+  const { mutate: deleteTask, isLoading } = useMutation({
     mutationFn: (taskId) => {
       return customFetch.delete(`/${taskId}`);
     },
@@ -43,6 +40,7 @@ const SingleItem = ({ item }) => {
       <button
         className='btn remove-btn'
         type='button'
+        disabled={isLoading}
         onClick={() => deleteTask(item.id)}
       >
         delete
