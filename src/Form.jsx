@@ -1,10 +1,16 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import customFetch from "./util";
 
 const Form = () => {
   const [newItemName, setNewItemName] = useState("");
+  const { mutate: createTask, isLoading } = useMutation({
+    mutationFn: () => customFetch.post("/", { title: "greatness is here" }),
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    createTask();
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -17,7 +23,7 @@ const Form = () => {
           value={newItemName}
           onChange={(event) => setNewItemName(event.target.value)}
         />
-        <button type='submit' className='btn'>
+        <button type='submit' className='btn' disabled={isLoading}>
           add task
         </button>
       </div>
